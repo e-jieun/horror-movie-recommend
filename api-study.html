@@ -19,13 +19,14 @@
     // console.dir(ajax);
     // 	http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=20120101
     // ?key를 신청해서 받은 부분을 문자열로 대입해줄 변수
-    const myKey = ``;
+    const myKey = `420782fb2a083bedd87f972af2385b05`;
     // ?조회하고자하는 날짜 => 이 부분에 요청 인터페이스와 알맞은 타입의 값을 넣어서 요청하면 된다
-    const test = `targetDt=20220623`;
+    const test = `movieNm=가`;
     // ?rest 방식의 url을 .json 확장자 전까지 붙여넣어주고
     // ?응답 예시
     // ?http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=20120101
-    const _URL =`http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json?key=${myKey}&${test}&itemPerPage=10`;
+    // ?itemPerPage = 결과값 row의 개수
+    const _URL =` http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=${myKey}&${test}&itemPerPage=30`;
     // console.log(_URL);
     // ?요청 parameter : 3번항의 요청 인터페이스 정보를 참조하여 GET 방식으로 호출
     ajax.open("GET", _URL);
@@ -36,10 +37,10 @@
     ajax.addEventListener('load', () => {
       const _movieAPI = ajax.response;
       console.log(_movieAPI);
-      const boxOfficeList = _movieAPI.boxOfficeResult.dailyBoxOfficeList;
-      for (let i = 0; i < boxOfficeList.length; i++) {
-        console.log(`${i+1}등 영화 : ${_movieAPI.boxOfficeResult.dailyBoxOfficeList[i].movieNm}`);
-      }
+      // const boxOfficeList = _movieAPI.boxOfficeResult.dailyBoxOfficeList;
+      // for (let i = 0; i < boxOfficeList.length; i++) {
+      //   console.log(`${i+1}등 영화 : ${_movieAPI.boxOfficeResult.dailyBoxOfficeList[i].movieNm}`);
+      // }
     });
 
 
