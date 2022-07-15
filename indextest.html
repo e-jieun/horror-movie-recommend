@@ -6,7 +6,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="">
 </head>
 
 <body>
@@ -25,10 +24,10 @@
     // <!--todo: 이 부분에 검색하고자 하는 변수, 버튼이 들어가야 한다 
     // <!--*제임스완은 나온다, 띄어쓰기 없어도 됨, 띄어쓰기 해서 검색해도 잘 응답을 해준다
     //<!--todo: 고전 공포 영화도 소개할 것이므로 옛날 영화도 검색이 가능한지 알아봐야 한다 => 다리오 아르젠토, 알프레드 히치콕 등도 검색 가능
-    const director = `directorNm=다리오 아르젠토`;
-    const name = `movieNm=랑종`;
+    // const test = `directorNm=조지 A. 로메로`;
+    const test = `targetDt=20220715`;
+    const name = `movieNm=좀비랜드`;
     // 영화유형 코드
-    const releaseYear = `openStartDt=2020`;
     const genre = `movieTypeCd=default`;
     // <!--? rest 방식의 url을 .json 확장자 전까지 붙여넣어주고
     // <!--?응답 예시
@@ -37,46 +36,30 @@
     // <!--*영화 목록 조회 API 서비스 카테고리에서 사용방법 보기 
     // <!--? 국적 코드 
     // https://www.kobis.or.kr/kobisopenapi/homepg/apiservice/searchServiceInfo.do?serviceId=searchMovieList
-    const _URL =
-      ` http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json?key=${myKey}&${director}&itemPerPage=20`;
+    const _URL =`http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${myKey}&${test}&itemPerPage=20`;
     // console.log(_URL);
-    // <!--? 요청 parameter : 3번항의 요청 인터페이스 정보를 참조하여 GET 방식으로 호출
-    // <!--? 서버로부터 데이터를 가져오는 GET 요청 방식, 서버에 데이터를 등록하는 POST 요청 방식
+    // <!--?요청 parameter : 3번항의 요청 인터페이스 정보를 참조하여 GET 방식으로 호출
     ajax.open("GET", _URL);
     // 응답해주는 타입? => JSON
     ajax.responseType = "json";
     ajax.send();
 
-    let moviePrint = '';
     ajax.addEventListener('load', () => {
       const _movieAPI = ajax.response;
-      console.table(_movieAPI); //이 부분에서 응답을 받은 결과를 출력해준다
-      const movieName = _movieAPI.movieListResult.movieList;
-      // const boxOfficeList = _movieAPI.boxOfficeResult.dailyBoxOfficeList;
-      for (let i = 0; i < movieName.length; i++) {
-        // <!--todo: console을 보면 답이 나온다! 객체 구조를 잘 보도록 하자!
-          console.log(`${_movieAPI.movieListResult.movieList[i].movieNm}`);
-          const title = _movieAPI.movieListResult.movieList[i];
-        // <!--장르가 문자열 값과 같을 때만 출력이 되도록 해야한다
-        // <!--*드디어 장르를 한번 거쳐서 감독의 작품이 출력된다!
-        if(title.genreAlt.includes('스릴러') || title.genreAlt.includes('공포(호러)') || title.genreAlt.includes('미스터리') ){
-          // moviePrint += `<div>${title.movieNm}</div>`;
-          let index = i+1;
-          moviePrint += makeResultList(index+'.\n\n'+title.movieNm+'\n|\n'+title.genreAlt);
-        } else if(title.genreAlt.includes('오컬트')){
-          console.log('오컬트 장르가 있습니다.')
-        }
+      console.log(_movieAPI); //이 부분에서 응답을 받은 결과를 출력해준다
+      const movieName = _movieAPI.bo
+      const boxOfficeList = _movieAPI.boxOfficeResult.dailyBoxOfficeList;
+      for (let i = 0; i < boxOfficeList.length; i++) {
+        console.log(`${i+1}등 영화 : ${_movieAPI.boxOfficeResult.dailyBoxOfficeList[i].movieNm}`);
       }
-      const root = document.getElementById('root');
-      console.log(moviePrint);
-      console.log(root);
-      root.innerHTML = moviePrint;
     });
     // const movieName = _movieAPI.
-    const makeResultList = function(contents){
-      return `<div>${contents}</div>`;
-    } 
+    
+
+
+
+
   </script>
 </body>
 
-</html>
+</html> 
